@@ -695,6 +695,11 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 @keyframes sparkle { 0% { opacity: 0; transform: scale(.3) rotate(0); } 45% { opacity: 1; } 100% { opacity: 0; transform: scale(1.7) rotate(38deg) translateY(-12px); } }
 
 @media (max-width: 720px) {
+  :root {
+    /* One shared vertical anchor keeps the invite and photo buttons aligned. */
+    --mobile-invite-center: 47%;
+  }
+
   .entrance-stage {
     width: min(122vw, 75.05svh);
     height: min(162.5vw, 100svh);
@@ -706,8 +711,21 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
   .party-bar { top: max(.7rem, env(safe-area-inset-top)); left: .7rem; right: .7rem; }
   .party-bar__label { font-size: .58rem; }
   .quiet-button { font-size: .6rem; padding: .5rem .62rem; }
-  .photo-hotspot--window { left: 5%; top: 31%; }
-  .photo-hotspot--kitchen { right: 3%; top: 48%; }
+
+  /* Mobile only: keep both photo buttons outside the invite card. */
+  .photo-hotspot--window {
+    left: .85rem;
+    right: auto;
+    top: calc(var(--mobile-invite-center) - 215px);
+    z-index: 16;
+  }
+  .photo-hotspot--kitchen {
+    right: .85rem;
+    left: auto;
+    top: calc(var(--mobile-invite-center) + 205px);
+    z-index: 16;
+    flex-direction: row-reverse;
+  }
   .photo-hotspot__label { font-size: .58rem; padding: .4rem .52rem; }
   .photo-hotspot__pulse { width: .82rem; height: .82rem; }
 
@@ -720,7 +738,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 
   .invite-card {
     width: min(365px, calc(100vw - 1.2rem));
-    top: 49%;
+    top: var(--mobile-invite-center);
   }
   .invite-card__inner { padding: 1.15rem 1rem 1rem; border-width: 6px; outline-offset: -10px; }
   .invite-card h1 { font-size: clamp(1.8rem, 9.2vw, 2.55rem); margin-bottom: .75rem; }
@@ -741,6 +759,15 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 }
 
 @media (max-width: 430px) and (max-height: 700px) {
+  :root { --mobile-invite-center: 46%; }
+
+  .photo-hotspot--window {
+    top: calc(var(--mobile-invite-center) - 178px);
+  }
+  .photo-hotspot--kitchen {
+    top: calc(var(--mobile-invite-center) + 172px);
+  }
+
   .invite-card__inner { padding: .8rem .85rem .75rem; }
   .invite-card h1 { font-size: 1.7rem; margin-bottom: .55rem; }
   .invite-list > div { padding: .3rem 0; }
